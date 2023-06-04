@@ -2,9 +2,7 @@ HELP.md
 # Ignore build output directory
 build
 /bin/
-/allure-results/
 /test-output/
-/test-recordings/*.*
 /video-converted/*.*
 .settings
 .classpath

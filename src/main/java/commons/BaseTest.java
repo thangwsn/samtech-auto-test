@@ -1,11 +1,14 @@
 package commons;
 
+import static org.testng.Assert.assertEquals;
+
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.time.Duration;
+import java.util.List;
 
 import org.apache.commons.io.IOUtils;
 import org.openqa.selenium.WebDriver;
@@ -67,8 +70,9 @@ public class BaseTest {
 	}
 	
 	@AfterClass(alwaysRun = true)
-	public void afterScreenTest() {
+	public void afterScreenTest() throws Exception {
 		closeBrowserDriver();
+		ScreenRecorderHelper.stopRecord();
 		attachVideoToAllure();
 	}
 
@@ -99,7 +103,7 @@ public class BaseTest {
 
 	public void attachVideoToAllure() {
 		try {
-			String sourceUrl = GlobalConstants.testRecordings + File.pathSeparator + ScreenRecorderHelper.fileName;
+			String sourceUrl = GlobalConstants.testRecordings + File.separator + ScreenRecorderHelper.fileName;
 			String tagertUrl = GlobalConstants.videoConverted + File.separator + "Video Converted_"
 					+ faker.generateFakeDateTimeNow("dd-MM-yyyy HH-mm-ss") + ".mp4";
 			ConvertVideoToMp4.convert(sourceUrl, tagertUrl);
@@ -128,7 +132,6 @@ public class BaseTest {
 
 	public void deleteTestRecordings() {
 		String path = GlobalConstants.testRecordings;
-		System.out.println(path);
 		File directory = new File(path);
 		File[] files = directory.listFiles();
 		for (File file : files) {
@@ -187,6 +190,13 @@ public class BaseTest {
 			} catch (IOException | InterruptedException e) {
 				e.printStackTrace();
 			}
+		}
+	}
+	
+	protected void assert2List(List<String> actual, List<String> expected) {
+		assertEquals(actual.size(), expected.size());
+		for (int i = 0; i < expected.size(); i++) {
+			assertEquals(actual.get(i), expected.get(i));
 		}
 	}
 

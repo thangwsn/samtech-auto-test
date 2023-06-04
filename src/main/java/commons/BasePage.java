@@ -1,13 +1,9 @@
 package commons;
 
 import java.io.ByteArrayInputStream;
-import java.io.File;
 import java.time.Duration;
 import java.util.List;
-import java.util.Set;
-import java.util.concurrent.TimeUnit;
 
-import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
@@ -17,14 +13,10 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.Color;
-import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.Assert;
 
 import io.qameta.allure.Allure;
-import pageui.CommonUI;
 
 public class BasePage {
 
@@ -38,7 +30,11 @@ public class BasePage {
 		driver.get(pageUrl);
 		sleepInSecond(5);
 	}
-
+	
+	public String getCurrentUrl(WebDriver driver) {
+		return driver.getCurrentUrl();
+	}
+	
 	/**
 	 * Refresh the current page
 	 *
@@ -441,6 +437,11 @@ public class BasePage {
 		Actions action = new Actions(driver);
 		action.moveToElement(getWebElement(driver, getDynamicXpath(locatorType, dynamicValues))).perform();
 	}
+	
+	public void hoverToElement(WebDriver driver, WebElement element) {
+		Actions action = new Actions(driver);
+		action.moveToElement(element).perform();
+	}
 
 	/**
 	 * Press the key to interact with the element
@@ -544,6 +545,10 @@ public class BasePage {
 	public void scrollToElement(WebDriver driver, String locatorType, String... dynamicValues) {
 		JavascriptExecutor jsExecutor = (JavascriptExecutor) driver;
 		jsExecutor.executeScript("arguments[0].scrollIntoView(true);", getWebElement(driver, getDynamicXpath(locatorType, dynamicValues)));
+	}
+	
+	public void scrollToElement(WebDriver driver, WebElement element) {
+		new Actions(driver).scrollToElement(element).perform();
 	}
 
 	/**
@@ -708,6 +713,10 @@ public class BasePage {
 	 */
 	public static void takeScreenshot(WebDriver driver, String name) {
 		Allure.addAttachment(name, new ByteArrayInputStream(((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES)));
+	}
+	
+	public static void attachTextContent(String text) {
+		Allure.addAttachment(text, "");
 	}
 
 	/**
