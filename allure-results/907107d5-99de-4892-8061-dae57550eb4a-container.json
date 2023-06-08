@@ -1,1 +1,0 @@
-{"uuid":"907107d5-99de-4892-8061-dae57550eb4a","name":"Test on Chrome","children":["1b2ebacf-e203-4d8e-8661-fbd98451deee"],"befores":[{"name":"initBeforeSuite","status":"passed","stage":"finished","description":"","steps":[],"attachments":[],"parameters":[],"start":1685892557637,"stop":1685892557654}],"afters":[],"links":[],"start":1685892557611,"stop":1685893222088}
