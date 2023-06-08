@@ -3,6 +3,7 @@ HELP.md
 build
 /bin/
 /test-output/
+/allure-results
 /video-converted/*.*
 .settings
 .classpath
